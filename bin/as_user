@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 require 'as_uid'
 
-uid = ARGV[0].to_i
+user_name = ARGV[0]
 cmd = ARGV[1]
 
-Process.as_uid(uid) do
+Process.as_user(user_name) do
   puts `#{cmd}`
 end

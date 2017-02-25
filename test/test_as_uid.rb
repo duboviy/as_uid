@@ -2,7 +2,6 @@ require 'test/unit'
 require 'fileutils'
 require 'as_uid'
 
-
 class AsUidTest < Test::Unit::TestCase
   def test_positive_scenario
       Dir.mkdir("as_root")
@@ -16,6 +15,12 @@ class AsUidTest < Test::Unit::TestCase
         assert_equal Process.uid, File.stat('as_user').uid, 'Must be user'
         assert_not_equal 'root', %x{whoami}, 'Must run as user'
         FileUtils.rm_rf('as_user')
+
+        Process.as_user('root') do
+          assert_equal Process.uid, 0, 'Must run as root'
+        end
+
+        assert_equal Process.uid, 1000, 'Must run as user'
       end
 
       Dir.mkdir("as_root")
