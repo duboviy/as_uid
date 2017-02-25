@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'as_uid'
+
+uid = ARGV[0].to_i
+cmd = ARGV[1]
+
+Process.as_uid(uid) do
+  puts `#{cmd}`
+end
